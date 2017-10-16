@@ -42,3 +42,5 @@ You can try it out via the jsfiddle here:
 JSFiddle: http://jsfiddle.net/cbPnq/3/
 
 Or with demo.html in the repo.
+/******************************
+This Component won't works with Kendo UI components.I will add it...;)
