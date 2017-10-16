@@ -1,6 +1,6 @@
 (function($) {
     $.fn.BindJson = function(fieldData, cssClassPrefix) {
-        var selectorPrefix = " ." + cssClassPrefix,
+        var selectorPrefix = " #" + cssClassPrefix,
             key = [],
             ctl = null,
             isTextField = false,
@@ -21,7 +21,7 @@
 
 
                         if ($(this)[0] != null && $(this)[0].attributes['data-role'] != null) {
-                            var compnentType = $(this)[0].attributes['data-role']
+                            var compnentType = $(this)[0].attributes['data-role'].value;
 
                             switch (compnentType) {
                                 case "combobox":
@@ -41,16 +41,13 @@
 
                                     break;
                                 case "multiselect":
-                                    var multiselect = ($this).data("kendoMultiSelect");
+                                    var multiselect = $(this).data("kendoMultiSelect");
                                     multiselect.value(fill);
                                     multiselect.trigger("change");
                                     break;
                                 default:
                                     break;
                             }
-
-
-
 
                         } else
                         if (isTextField) {
@@ -72,14 +69,54 @@
         $(":input", this).each(function() {
             var type = this.type,
                 tag = this.tagName.toLowerCase();
-            if (type == 'text' || type == 'password' || type == 'tel' || type == 'date' || type == 'email' || tag == 'textarea' || type == 'hidden' || type == 'number') {
+            if (type == 'text' ||
+                type == 'password' ||
+                type == 'tel' ||
+                type == 'date' ||
+                type == 'email' ||
+                tag == 'textarea' ||
+                type == 'hidden' ||
+                type == 'number') {
                 this.value = "";
             } else if (type == 'checkbox' || type == 'radio') {
                 this.checked = false;
             } else if (tag == 'select') {
                 this.selectedIndex = 0;
             }
+		});
+
+		$("[data-role='combobox']", this).each(function () {
+            
+			var combobox = $(this).data("kendoComboBox");
+		    combobox.value('');
+		    combobox.trigger("change");
+
         });
+
+		$("[data-role='dropdownlist']", this).each(function () {
+
+			var dropdownlist = $(this).data("kendoDropDownList");
+		    dropdownlist.value('');
+		    dropdownlist.trigger("change");
+
+		});
+		$("[data-role='autocomplete']", this).each(function () {
+
+			var autocomplete = $(this).data("kendoAutoComplete");
+		    autocomplete.value('');
+		    autocomplete.trigger("change");
+
+		});
+		$("[data-role='multiselect']", this).each(function () {
+
+			var multiselect = $(this).data("kendoMultiSelect");
+		    multiselect.value('');
+		    multiselect.trigger("change");
+
+        });
+
+
+
         if (clearClass) {
             $("." + clearClass, this).text("");
         }
